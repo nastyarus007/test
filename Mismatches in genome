@@ -1,0 +1,43 @@
+from itertools import chain, product
+genome = input('genome? ')
+k = int(input('k-len? '))
+hamming_distance = int(input('hamming distance? '))
+letters_list = ['A', 'C', 'G', 'T']
+frequency_array_list = []
+a = 0
+kmers_list = []
+
+def bruteforce(charset, maxlength):
+    return (''.join(candidate)
+        for candidate in chain.from_iterable(product(charset, repeat=i)
+        for i in range(1, maxlength + 1)))
+
+for i in list(bruteforce(letters_list, k)):
+    if len(i) == k:
+        frequency_array_list.append(i)
+
+for letter in genome:
+    kmers = genome[a:a+k]
+    if len(kmers) == k:
+        kmers_list.append(kmers)
+    a += 1
+
+frequent_kmers_list = []
+for kmer in kmers_list:
+    for vse_kmeri in frequency_array_list:
+        dlina = len(vse_kmeri)
+        score = 0
+        b = 0
+        while dlina > 0:
+            dlina -= 1
+            if kmer[b] == vse_kmeri[b]:
+                score += 0
+            else:
+                score += 1
+            b += 1
+        if score <= 1:
+            frequent_kmers_list.append(vse_kmeri)
+
+from collections import Counter
+counter = Counter(frequent_kmers_list)
+print(counter)
